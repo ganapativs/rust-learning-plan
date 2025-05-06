@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ecosystem - Rust Learning Plan</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive learning plan for Rust programming language">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "ayu";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Learning Plan</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ganapativs/rust-learning-plan" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/ganapativs/rust-learning-plan/edit/main/src/beginner/ecosystem-week1.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-1-rust-ecosystem-beginner"><a class="header" href="#week-1-rust-ecosystem-beginner">Week 1: Rust Ecosystem (Beginner)</a></h1>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>This week focuses on getting familiar with the Rust ecosystem before diving into coding. Understanding the tooling, community resources, and project structure will give you a solid foundation.</p>
+<h2 id="day-1-2-development-environment--tools"><a class="header" href="#day-1-2-development-environment--tools">Day 1-2: Development Environment &amp; Tools</a></h2>
+<h3 id="topics"><a class="header" href="#topics">Topics</a></h3>
+<ul>
+<li>Installing Rust via rustup</li>
+<li>Understanding rustup’s channel system (stable/beta/nightly)</li>
+<li>Configuring VS Code with rust-analyzer</li>
+<li>Basic Cargo commands (new, init, build, run, check, test)</li>
+<li>Cargo.toml structure</li>
+</ul>
+<h3 id="resources"><a class="header" href="#resources">Resources</a></h3>
+<ul>
+<li><a href="https://www.rust-lang.org/tools/install">Official Rust Installation Guide</a></li>
+<li><a href="https://code.visualstudio.com/docs/languages/rust">VS Code Rust Setup Guide</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch01-00-getting-started.html">Rust Book Ch 1</a></li>
+<li><a href="https://rust-lang.github.io/rustup/index.html">Rustup Guide</a></li>
+</ul>
+<h3 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h3>
+<ul>
+<li>Setup for all future Rust development</li>
+<li>Understanding how to manage Rust versions and toolchains</li>
+<li>Creating new projects efficiently</li>
+<li>Running and testing code during development</li>
+</ul>
+<h2 id="day-3-4-package-management--project-structure"><a class="header" href="#day-3-4-package-management--project-structure">Day 3-4: Package Management &amp; Project Structure</a></h2>
+<h3 id="topics-1"><a class="header" href="#topics-1">Topics</a></h3>
+<ul>
+<li>Understanding the standard project structure</li>
+<li>Cargo.toml vs Cargo.lock</li>
+<li>Adding, updating, and removing dependencies</li>
+<li>Semantic versioning in Rust</li>
+<li>Exploring crates.io and lib.rs</li>
+<li>Binary vs library crates</li>
+<li>Basic module organization</li>
+</ul>
+<h3 id="resources-1"><a class="header" href="#resources-1">Resources</a></h3>
+<ul>
+<li><a href="https://doc.rust-lang.org/cargo/">Cargo Book</a></li>
+<li><a href="https://crates.io">Crates.io</a></li>
+<li><a href="https://lib.rs">Lib.rs</a> (Alternative crate registry with better search)</li>
+<li><a href="https://doc.rust-lang.org/cargo/guide/project-layout.html">Package Layout Convention</a></li>
+</ul>
+<h3 id="use-cases-1"><a class="header" href="#use-cases-1">Use Cases</a></h3>
+<ul>
+<li>Managing project dependencies</li>
+<li>Organizing code in a maintainable way</li>
+<li>Publishing packages to crates.io</li>
+<li>Working with complex project structures</li>
+</ul>
+<h2 id="day-5-7-tooling--community"><a class="header" href="#day-5-7-tooling--community">Day 5-7: Tooling &amp; Community</a></h2>
+<h3 id="topics-2"><a class="header" href="#topics-2">Topics</a></h3>
+<ul>
+<li>Essential Cargo extensions:
+<ul>
+<li>cargo-edit: Add/remove dependencies from command line</li>
+<li>cargo-watch: Auto-rebuild on file changes</li>
+<li>cargo-expand: Show expanded macros</li>
+<li>cargo-outdated: Check for outdated dependencies</li>
+<li>cargo-audit: Security vulnerability checking</li>
+</ul>
+</li>
+<li>Code quality tools:
+<ul>
+<li>Clippy (linting)</li>
+<li>Rustfmt (formatting)</li>
+</ul>
+</li>
+<li>Documentation:
+<ul>
+<li>rustdoc</li>
+<li>Generating and viewing docs with <code>cargo doc --open</code></li>
+</ul>
+</li>
+<li>Community resources:
+<ul>
+<li>Reddit r/rust</li>
+<li>This Week in Rust newsletter</li>
+<li>Rust users forum</li>
+</ul>
+</li>
+</ul>
+<h3 id="resources-2"><a class="header" href="#resources-2">Resources</a></h3>
+<ul>
+<li><a href="https://doc.rust-lang.org/clippy/">Clippy Documentation</a></li>
+<li><a href="https://rust-lang.github.io/rustfmt/">Rustfmt Documentation</a></li>
+<li><a href="https://this-week-in-rust.org/">This Week in Rust</a></li>
+<li><a href="https://blessed.rs/crates">Blessed.rs</a> (Community-recommended libraries)</li>
+<li><a href="https://users.rust-lang.org/">Rust Users Forum</a></li>
+</ul>
+<h3 id="use-cases-2"><a class="header" href="#use-cases-2">Use Cases</a></h3>
+<ul>
+<li>Maintaining high-quality code</li>
+<li>Finding solutions to common problems</li>
+<li>Staying up-to-date with Rust developments</li>
+<li>Leveraging community knowledge and best practices</li>
+</ul>
+<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
+<ol>
+<li>Set up your development environment with VS Code and rust-analyzer</li>
+<li>Create a new project with <code>cargo new</code> and explore its structure</li>
+<li>Add and use a simple dependency like <code>colored</code> or <code>chrono</code></li>
+<li>Run Clippy and Rustfmt on your code</li>
+<li>Generate documentation for your project with <code>cargo doc</code></li>
+<li>Explore crates.io to find useful libraries for common tasks</li>
+</ol>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>After completing this week, you’ll have a solid understanding of the Rust ecosystem and tooling, preparing you for the syntax and concepts in the upcoming weeks.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../beginner/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../beginner/fundamentals-week2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../beginner/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../beginner/fundamentals-week2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Memory Management - Rust Learning Plan</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive learning plan for Rust programming language">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "ayu";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Learning Plan</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ganapativs/rust-learning-plan" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/ganapativs/rust-learning-plan/edit/main/src/advanced/memory-management-week13.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="week-13-advanced-memory-management-advanced"><a class="header" href="#week-13-advanced-memory-management-advanced">Week 13: Advanced Memory Management (Advanced)</a></h1>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>Week 13 begins the advanced phase of the Rust learning journey, focusing on sophisticated memory management techniques. You’ll explore allocators, advanced smart pointer implementations, and complex ownership patterns that push the boundaries of Rust’s memory model while maintaining safety.</p>
+<h2 id="day-1-2-the-allocator-interface"><a class="header" href="#day-1-2-the-allocator-interface">Day 1-2: The Allocator Interface</a></h2>
+<h3 id="topics"><a class="header" href="#topics">Topics</a></h3>
+<ul>
+<li>Global allocator and the <code>GlobalAlloc</code> trait</li>
+<li><code>std::alloc</code> module in depth</li>
+<li>Custom allocator implementations</li>
+<li>Allocator API and alignment requirements</li>
+<li>Layout calculations and optimizations</li>
+<li>Porting allocators from C/C++</li>
+<li>Using existing allocator libraries:
+<ul>
+<li><code>bumpalo</code></li>
+<li><code>mimalloc</code></li>
+<li><code>jemalloc</code></li>
+</ul>
+</li>
+<li>Measuring allocator performance</li>
+</ul>
+<h3 id="resources"><a class="header" href="#resources">Resources</a></h3>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/alloc/index.html">Rust Allocator Documentation</a></li>
+<li><a href="https://doc.rust-lang.org/std/alloc/trait.GlobalAlloc.html">Global Allocator API</a></li>
+<li><a href="https://os.phil-opp.com/allocator-designs/">Custom Allocators in Rust</a></li>
+<li><a href="https://docs.rs/bumpalo/latest/bumpalo/">Bumpalo Documentation</a></li>
+<li><a href="https://github.com/tikv/jemallocator">Using jemalloc with Rust</a></li>
+</ul>
+<h3 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h3>
+<ul>
+<li>High-performance applications needing custom memory management</li>
+<li>Embedded systems with specialized allocation needs</li>
+<li>Gamedev with frame-based allocation strategies</li>
+<li>Memory-constrained environments</li>
+<li>Performance-critical applications</li>
+</ul>
+<h2 id="day-3-4-smart-pointers-deep-dive"><a class="header" href="#day-3-4-smart-pointers-deep-dive">Day 3-4: Smart Pointers Deep Dive</a></h2>
+<h3 id="topics-1"><a class="header" href="#topics-1">Topics</a></h3>
+<ul>
+<li>Implementing custom smart pointers</li>
+<li>Interior mutability patterns</li>
+<li>Shared ownership with <code>Rc&lt;T&gt;</code> and <code>Arc&lt;T&gt;</code>:
+<ul>
+<li>Implementation details</li>
+<li>Memory layout</li>
+<li>Reference counting mechanics</li>
+</ul>
+</li>
+<li>Handling weak references with <code>Weak&lt;T&gt;</code></li>
+<li>Breaking reference cycles</li>
+<li>Custom <code>Deref</code> and <code>DerefMut</code> implementations</li>
+<li>Smart pointer ergonomics and optimizations</li>
+<li>GC-like patterns in Rust</li>
+</ul>
+<h3 id="resources-1"><a class="header" href="#resources-1">Resources</a></h3>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch15-00-smart-pointers.html">Smart Pointers in Rust Book</a></li>
+<li><a href="https://doc.rust-lang.org/src/alloc/sync.rs.html">Arc/Rc Implementation Details</a></li>
+<li><a href="https://doc.rust-lang.org/std/ops/trait.Deref.html">Understanding Deref Coercion</a></li>
+<li><a href="https://ricardomartins.cc/2016/06/08/interior-mutability">Interior Mutability in Rust</a></li>
+<li><a href="https://www.youtube.com/watch?v=8O0Nt9qY_vo">Crust of Rust: Smart Pointers and Interior Mutability</a></li>
+</ul>
+<h3 id="use-cases-1"><a class="header" href="#use-cases-1">Use Cases</a></h3>
+<ul>
+<li>Building complex data structures (graphs, trees)</li>
+<li>Caching systems with weak references</li>
+<li>Reference-counted resource management</li>
+<li>Shared state in concurrent applications</li>
+<li>Custom containers with specific memory characteristics</li>
+</ul>
+<h2 id="day-5-7-advanced-ownership-patterns"><a class="header" href="#day-5-7-advanced-ownership-patterns">Day 5-7: Advanced Ownership Patterns</a></h2>
+<h3 id="topics-2"><a class="header" href="#topics-2">Topics</a></h3>
+<ul>
+<li>Self-referential structures:
+<ul>
+<li>Challenges and approaches</li>
+<li>Using the <code>Pin</code> API</li>
+<li><code>std::pin</code> module in depth</li>
+</ul>
+</li>
+<li>Ghost types and phantom data</li>
+<li>Borrowed and owned handles</li>
+<li>The <code>Cow&lt;T&gt;</code> (Clone on Write) pattern</li>
+<li>Arena allocation patterns:
+<ul>
+<li>Using crates like <code>typed-arena</code></li>
+<li>Region-based memory management</li>
+</ul>
+</li>
+<li>Ownership in non-lexical contexts</li>
+<li>The <code>ouroboros</code> crate for safe self-referential types</li>
+<li>Working with uninitialized memory safely</li>
+<li>Advanced lifetime management</li>
+</ul>
+<h3 id="resources-2"><a class="header" href="#resources-2">Resources</a></h3>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/pin/index.html">Pin API documentation</a></li>
+<li><a href="https://fasterthanli.me/articles/pin-and-suffering">Pin and Suffering</a></li>
+<li><a href="https://rust-lang.github.io/rfcs/2582-raw-reference-mir-operator.html">Self-referential Structs</a></li>
+<li><a href="https://docs.rs/ouroboros/latest/ouroboros/">Ouroboros crate documentation</a></li>
+<li><a href="https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/">Arena allocation in Rust</a></li>
+<li><a href="https://doc.rust-lang.org/std/borrow/enum.Cow.html">Cow documentation</a></li>
+</ul>
+<h3 id="use-cases-2"><a class="header" href="#use-cases-2">Use Cases</a></h3>
+<ul>
+<li>Creating async state machines</li>
+<li>Building self-referential data structures</li>
+<li>Managing complex object graphs</li>
+<li>Zero-copy deserialization</li>
+<li>High-performance data processing</li>
+<li>Memory-efficient data manipulation</li>
+</ul>
+<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
+<ol>
+<li>Implement a custom allocator that tracks memory usage</li>
+<li>Create a self-referential struct using the <code>Pin</code> API</li>
+<li>Build a simple reference-counting smart pointer</li>
+<li>Implement a memory pool/arena for object allocation</li>
+<li>Create a data structure that uses <code>Cow&lt;T&gt;</code> for efficient cloning</li>
+<li>Benchmark different allocator implementations for a specific use case</li>
+</ol>
+<h2 id="advanced-challenges"><a class="header" href="#advanced-challenges">Advanced Challenges</a></h2>
+<ol>
+<li>Implement a slab allocator for fixed-size objects</li>
+<li>Create a safe abstraction for a self-referential structure without external crates</li>
+<li>Build a custom <code>Rc&lt;T&gt;</code> implementation with different trade-offs</li>
+<li>Design a memory-efficient graph data structure</li>
+<li>Implement a custom allocator that works in no_std environments</li>
+</ol>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>After completing Week 13, you’ll have a deep understanding of Rust’s memory management capabilities. Week 14 will build on this knowledge by exploring unsafe Rust and the foundational abstractions that make it safe.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../advanced/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../advanced/unsafe-rust-week14.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../advanced/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../advanced/unsafe-rust-week14.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
