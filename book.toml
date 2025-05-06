@@ -1,0 +1,38 @@
+[book]
+title = "Rust Learning Plan"
+authors = ["Ganapati V S <vsg.inbox@gmail.com>"]
+description = "A comprehensive learning plan for Rust programming language"
+language = "en"
+multilingual = false
+src = "src"
+
+[build]
+build-dir = "book"
+create-missing = true
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "ayu"
+smart-punctuation = true
+mathjax-support = true
+copy-fonts = true
+git-repository-url = "https://github.com/ganapativs/rust-learning-plan"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/ganapativs/rust-learning-plan/edit/main/{path}"
+
+[output.html.search]
+enable = true
+limit-results = 20
+teaser-word-count = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.playground]
+editable = true

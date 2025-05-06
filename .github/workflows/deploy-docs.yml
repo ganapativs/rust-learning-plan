@@ -1,0 +1,33 @@
+name: Deploy mdBook Documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "book.toml"
+      - ".github/workflows/deploy-docs.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: "latest"
+
+      - name: Build mdBook
+        run: mdbook build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
+          publish_branch: gh-pages
+          force_orphan: true
