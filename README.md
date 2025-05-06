@@ -1,4 +1,4 @@
-# Rust Learning Plan Documentation
+# Rust Learning Plan
 
 This directory contains the source files for the Rust Learning Plan documentation site, built with [mdBook](https://rust-lang.github.io/mdBook/).
 
