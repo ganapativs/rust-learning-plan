@@ -10,7 +10,6 @@ on:
       - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
-# Add this permissions block
 permissions:
   contents: write
 

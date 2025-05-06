@@ -4,6 +4,8 @@
 [Rust Ecosystem](./rust-ecosystem.md)
 [Reading Materials](./reading-materials.md)
 
+---
+
 # Learning Plan
 
 - [Beginner (Week 1-6)](./beginner/README.md)
