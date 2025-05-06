@@ -2,6 +2,8 @@
 
 This directory contains the source files for the Rust Learning Plan documentation site, built with [mdBook](https://rust-lang.github.io/mdBook/).
 
+Hosted version: [ganapativs.github.io/rust-learning-plan](https://ganapativs.github.io/rust-learning-plan/)
+
 > Note: Parts of this repository were created with the assistance of AI tools. If you notice anything that could be improved or have suggestions, please contribute via pull requests.
 
 ## Getting Started
